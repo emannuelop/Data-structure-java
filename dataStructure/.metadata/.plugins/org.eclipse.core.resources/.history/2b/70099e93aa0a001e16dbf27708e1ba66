@@ -1,0 +1,20 @@
+package unitins;
+
+import java.util.ArrayList;
+
+/**
+ * 
+ * @author emann
+ *
+ */
+public class Node {
+
+	ArrayList<Vertex> edges;
+	String info = "";
+
+	Node(String info) {
+		this.info = info;
+		this.edges = new ArrayList<>();
+	}
+
+}

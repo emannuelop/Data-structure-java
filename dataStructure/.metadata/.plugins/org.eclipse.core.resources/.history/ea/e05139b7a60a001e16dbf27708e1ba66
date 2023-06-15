@@ -1,0 +1,13 @@
+package unitins;
+
+public class Node {
+
+	
+	String info = "";
+
+	Node(String info) {
+		this.info = info;
+		this.edges
+	}
+
+}
