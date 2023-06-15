@@ -4,61 +4,82 @@ import java.util.ArrayList;
 
 public class Graph {
 
-	public ArrayList<Node> nodeList = new ArrayList<>();
-	public ArrayList<Vertex> vertexList = new ArrayList<>();
+	private ArrayList<Node> shortestPath = new ArrayList<Node>();
+	private ArrayList<Node> nodeList = new ArrayList<Node>();
+	public ArrayList<Vertex> vertexList = new ArrayList<Vertex>();
+	private int currentPathCost = Integer.MAX_VALUE;
 
 	public Node addNode(String info) {
 		Node newNode = new Node(info);
 		nodeList.add(newNode);
+
 		return newNode;
 	}
 
 	public Node getNode(String info) {
+		Node response = null;
+
 		for (Node node : nodeList) {
-			if (node.info.equals(info)) {
-				return node;
+			if (node.getInfo().equals(info)) {
+				response = node;
 			}
 		}
-		return addNode(info);
+
+		if (response == null) {
+			throw new RuntimeException("The " + info + " was not found");
+		}
+
+		return response;
 	}
 
-	public void createVertex(String infoNodeA, String infoNodeB, int cost) {
-		createVertex(getNode(infoNodeA), getNode(infoNodeB), cost);
+	public void createVertex(String nodeA, String nodeB, int cost) {
+		createVertex(getNode(nodeA), getNode(nodeB), cost);
 	}
 
 	public void createVertex(Node nodeA, Node nodeB, int cost) {
 		Vertex newVertex = new Vertex(nodeA, nodeB, cost);
+		nodeA.getVertexList().add(newVertex);
+		nodeB.getVertexList().add(newVertex);
 		vertexList.add(newVertex);
 	}
-	
-	// Caminhos possiveis
 
 	public void printAllPathsFromTo(Node nodeA, Node nodeB) {
-		ArrayList<Node> visited = new ArrayList<>();
-		visited.add(nodeA);
-		printAllPathsUtil(nodeA, nodeB, visited);
+		ArrayList<Node> path = new ArrayList<>();
+		ArrayList<Vertex> edges = new ArrayList<>();
+		path.add(nodeA);
+		printAllPathsUtil(nodeA, nodeB, path, edges);
 	}
 
-	private void printAllPathsUtil(Node currentNode, Node destination, ArrayList<Node> visited) {
-		if (currentNode == destination) {
-			for (Node node : visited) {
-				System.out.print(node.info + " ");
+	private void printAllPathsUtil(Node nodeA, Node nodeB, ArrayList<Node> nodeList, ArrayList<Vertex> edgeList) {
+
+		if (nodeA.equals(nodeB)) {
+			if (pathCost(edgeList) < currentPathCost) {
+				shortestPath.clear();
+				shortestPath.addAll(nodeList);
+				currentPathCost = pathCost(edgeList);
 			}
-			System.out.println();
+
 			return;
 		}
 
-		for (Vertex vertex : vertexList) {
-			if (vertex.nodeA == currentNode && !visited.contains(vertex.nodeB)) {
-				visited.add(vertex.nodeB);
-				printAllPathsUtil(vertex.nodeB, destination, visited);
-				visited.remove(vertex.nodeB);
-			} else if (vertex.nodeB == currentNode && !visited.contains(vertex.nodeA)) {
-				visited.add(vertex.nodeA);
-				printAllPathsUtil(vertex.nodeA, destination, visited);
-				visited.remove(vertex.nodeA);
+		for (Vertex vertex : nodeA.getVertexList()) {
+			Node visited = vertex.getNodeB();
+			if (!nodeList.contains(visited)) {
+				nodeList.add(visited);
+				edgeList.add(vertex);
+				printAllPathsUtil(visited, nodeB, nodeList, edgeList);
+				nodeList.remove(visited);
+				edgeList.remove(vertex);
 			}
 		}
+	}
+
+	int pathCost(ArrayList<Vertex> edgeList) {
+		int cost = 0;
+		for (Vertex vertex : edgeList) {
+			cost += vertex.getCost();
+		}
+		return cost;
 	}
 
 }

@@ -4,12 +4,28 @@ import java.util.ArrayList;
 
 public class Node {
 
-	ArrayList<Vertex> edges;
-	String info = "";
+	private String info = "";
+	private ArrayList<Vertex> vertexList;
 
-	Node(String info) {
+	public Node(String info) {
 		this.info = info;
-		this.edges = new ArrayList<>();
+		vertexList = new ArrayList<Vertex>();
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public ArrayList<Vertex> getVertexList() {
+		return vertexList;
+	}
+
+	public void setVertexList(ArrayList<Vertex> vertexList) {
+		this.vertexList = vertexList;
 	}
 
 }

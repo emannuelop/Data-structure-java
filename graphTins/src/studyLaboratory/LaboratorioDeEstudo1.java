@@ -26,9 +26,6 @@ public class LaboratorioDeEstudo1 {
 			System.out.println(vertex);
 		}
 		
-		System.out.println("Caminhos");
-		grafo.printAllPathsFromTo(grafo.getNode("Palmas"), grafo.getNode("Paraiso"));
-		
 	}
 
 }

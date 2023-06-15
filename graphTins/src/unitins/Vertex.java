@@ -2,9 +2,9 @@ package unitins;
 
 public class Vertex {
 
-	Node nodeA  = null;
-	Node nodeB = null;
-	int cost = 0;
+	private Node nodeA = null;
+	private Node nodeB = null;
+	private int cost = 0;
 
 	public Vertex(Node nodeA, Node nodeB, int cost) {
 		this.nodeA = nodeA;
@@ -12,9 +12,32 @@ public class Vertex {
 		this.cost = cost;
 	}
 
-	@Override
 	public String toString() {
-		return nodeA.info + " <--" + cost + "--> " + nodeB.info;
+		return nodeA.getInfo() + " <--" + cost + "--> " + nodeB.getInfo();
+	}
+
+	public Node getNodeA() {
+		return nodeA;
+	}
+
+	public void setNodeA(Node nodeA) {
+		this.nodeA = nodeA;
+	}
+
+	public Node getNodeB() {
+		return nodeB;
+	}
+
+	public void setNodeB(Node nodeB) {
+		this.nodeB = nodeB;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 
 }
