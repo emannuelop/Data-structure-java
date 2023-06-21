@@ -52,9 +52,9 @@ public class MergeSortNome {
 		nomes.add("Carlos");
 		nomes.add("Bianca");
 
-		System.out.println("Depois ordenação: " + nomes);
-		mergeSort(nomes);
 		System.out.println("Antes ordenação: " + nomes);
+		mergeSort(nomes);
+		System.out.println("Depois ordenação: " + nomes);
 	}
 
 }
